@@ -41,6 +41,7 @@ namespace AspNetSandbox
             }
 
             app.UseHttpsRedirection();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
 
             app.UseRouting();
