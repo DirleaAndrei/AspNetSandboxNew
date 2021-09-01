@@ -70,6 +70,9 @@
                     <a href="#" class="languages">English</a>
                     <a href="#" class="languages">magyar</a>
                     <a href="#" class="languages">Deutsch</a>
+                    <textarea id="weather">
+
+                    </textarea>
                 </div>
             </div>
         </div>
@@ -96,13 +99,15 @@
 <script src="./lib/jquery/dist/jquery.min.js"></script>
 <script>
     var settings = {
-        "url": "https://localhost:5001/WeatherForecast",
+        "url": "/WeatherForecast",
         "method": "GET",
         "timeout": 0,
     };
 
     $.ajax(settings).done(function (response) {
-        console.log(response);
+        //console.log(response);
+        //document.querySelector('weather').setAttributeNode = response;
+        $('#weather').val(response[0].summary);
     });
 </script>
 
