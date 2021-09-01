@@ -1,0 +1,49 @@
+{
+	"info": {
+		"_postman_id": "b24323a1-563f-4620-8de1-d1cce181d21e",
+		"name": "OpenWeather",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://api.openweathermap.org/data/2.5/onecall?lat=45.657974&lon=25.601198&exclude=hourly,minutely&appid=5705b52fdd12e0753d98f978798de52a",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.openweathermap.org/data/2.5/onecall?lat=45.657974&lon=25.601198&exclude=hourly,minutely&appid=5705b52fdd12e0753d98f978798de52a",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"onecall"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "45.657974"
+						},
+						{
+							"key": "lon",
+							"value": "25.601198"
+						},
+						{
+							"key": "exclude",
+							"value": "hourly,minutely"
+						},
+						{
+							"key": "appid",
+							"value": "5705b52fdd12e0753d98f978798de52a"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
