@@ -107,7 +107,7 @@
     $.ajax(settings).done(function (response) {
         //console.log(response);
         //document.querySelector('weather').setAttributeNode = response;
-        $('#weather').val(response[0].summary);
+        $('#weather').val("The weather: "response[0].summary);
     });
 </script>
 
