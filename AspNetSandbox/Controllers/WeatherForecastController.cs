@@ -16,12 +16,6 @@ namespace AspNetSendbox.Controllers
 
         private const float KELVIN_CONST = 273.15f;
 
-
-        public WeatherForecastController()
-        {
-            
-        }
-
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
