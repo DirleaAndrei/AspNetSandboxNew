@@ -18,6 +18,8 @@ namespace AspNetSendbox.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
+        private const float KELVIN_CONST = 273.15f;
+
 
         public WeatherForecastController()
         {
@@ -47,24 +49,33 @@ namespace AspNetSendbox.Controllers
             //https://api.openweathermap.org/data/2.5/onecall?lat=45.657974&lon=25.601198&exclude=hourly,minutely&appid=5705b52fdd12e0753d98f978798de52a
         }
 
-        public IEnumerable<WeatherForecast> ConvertResponseToWeatherForecast(string content)
+        public IEnumerable<WeatherForecast> ConvertResponseToWeatherForecast(string content, int days = 5)
         {
 
             var json = JObject.Parse(content);
             
 
             var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => {
+            return Enumerable.Range(1, days).Select(index =>
+
+            {
                 var jsonDailyForecast = json["daily"][index];
                 var unixDateTime = jsonDailyForecast.Value<long>("dt");
+                var weatherSummary = jsonDailyForecast["weather"][0].Value<string>("main");
+
                 return new WeatherForecast
                 {
                     Date = DateTimeOffset.FromUnixTimeSeconds(unixDateTime).Date,
-                    TemperatureC = (int)(Math.Round(jsonDailyForecast["temp"].Value<float>("day") - 273.15f)),
-                    Summary = jsonDailyForecast["weather"][0].Value<string>("main")
+                    TemperatureC = ExtractCelsiusTemperatureFromDailyWeather(jsonDailyForecast),
+                    Summary = weatherSummary
                 };
             })
             .ToArray();
+        }
+
+        private static int ExtractCelsiusTemperatureFromDailyWeather(JToken jsonDailyForecast)
+        {
+            return (int)Math.Round(jsonDailyForecast["temp"].Value<float>("day") - KELVIN_CONST);
         }
     }
 }
