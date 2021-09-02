@@ -53,11 +53,15 @@ namespace AspNetSendbox.Controllers
             var json = JObject.Parse(content);
 
             var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            return Enumerable.Range(1, 5).Select(index =>
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = (int)(json["daily"][0]["temp"].Value<float>("day") - 273.15f),
-                Summary = json["daily"][0]["weather"][0].Value<string>("main")
+                JToken jsonDailyForecast = json["daily"][0];
+                return new WeatherForecast
+                {
+                    Date = DateTime.Now.AddDays(index),
+                    TemperatureC = (int)(jsonDailyForecast["temp"].Value<float>("day") - 273.15f),
+                    Summary = jsonDailyForecast["weather"][0].Value<string>("main")
+                };
             })
             .ToArray();
         }

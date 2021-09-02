@@ -100,7 +100,7 @@
 <script>
 
     var settings = {
-        "url": "/weatherForecast",
+        "url": "/WeatherForecast",
         "method": "GET",
         "timeout": 0,
     };
@@ -109,7 +109,7 @@
 
     $.ajax(settings).done(function (response) {
         console.log(response);
-        $("#weatherForecast").val("the weather for tomorow should look like this: " + response[0].summary);
+        $("#weather").val("the weather for tomorow should look like this: " + response[0].summary);
     });
 
 </script>
