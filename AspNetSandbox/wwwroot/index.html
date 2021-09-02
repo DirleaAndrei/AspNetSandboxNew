@@ -98,17 +98,20 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
 <script src="./lib/jquery/dist/jquery.min.js"></script>
 <script>
+
     var settings = {
-        "url": "/WeatherForecast",
+        "url": "/weatherForecast",
         "method": "GET",
         "timeout": 0,
     };
 
+
+
     $.ajax(settings).done(function (response) {
-        //console.log(response);
-        //document.querySelector('weather').setAttributeNode = response;
-        $('#weather').val("The weather: "response[0].summary);
+        console.log(response);
+        $("#weatherForecast").val("the weather for tomorow should look like this: " + response[0].summary);
     });
+
 </script>
 
 </html>
