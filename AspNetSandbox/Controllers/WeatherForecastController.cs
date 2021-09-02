@@ -13,10 +13,6 @@ namespace AspNetSendbox.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
 
         private const float KELVIN_CONST = 273.15f;
 
@@ -38,15 +34,6 @@ namespace AspNetSendbox.Controllers
 
             return ConvertResponseToWeatherForecast(response.Content);
 
-            //var rng = new Random();
-            //return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            //{
-            //    Date = DateTime.Now.AddDays(index),
-            //    TemperatureC = rng.Next(-20, 55),
-            //    Summary = Summaries[rng.Next(Summaries.Length)]
-            //})
-            //.ToArray();
-            //https://api.openweathermap.org/data/2.5/onecall?lat=45.657974&lon=25.601198&exclude=hourly,minutely&appid=5705b52fdd12e0753d98f978798de52a
         }
 
         public IEnumerable<WeatherForecast> ConvertResponseToWeatherForecast(string content, int days = 5)
