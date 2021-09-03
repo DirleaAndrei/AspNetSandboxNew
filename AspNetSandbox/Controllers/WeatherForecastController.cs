@@ -30,6 +30,22 @@ namespace AspNetSendbox.Controllers
 
         }
 
+        [HttpGet]
+        [Route("City")]
+        public IEnumerable<WeatherForecast> GetCityCoordinates(string City)
+        {
+            var client = new RestClient("https://api.openweathermap.org/data/2.5/onecall?lat=45.657974&lon=25.601198&exclude=hourly,minutely&appid=5705b52fdd12e0753d98f978798de52a");
+            client.Timeout = -1;
+            var request = new RestRequest(Method.GET);
+            IRestResponse response = client.Execute(request);
+            //Console.WriteLine(response.Content);
+
+
+            return ConvertResponseToWeatherForecast(response.Content);
+
+        }
+
+
         [NonAction]
         public IEnumerable<WeatherForecast> ConvertResponseToWeatherForecast(string content, int days = 5)
         {
