@@ -19,13 +19,13 @@ namespace AspNetSandbox
             books = new Book[2];
 
             books[0] = new Book();
-            books[0].BookID = 0;
+            books[0].BookId = 0;
             books[0].BookTitle = "Arta manipularii";
             books[0].BookLanguage = "Romanian";
             books[0].BookAuthor = "Kevin Dutton";
 
             books[1] = new Book();
-            books[1].BookID = 1;
+            books[1].BookId = 1;
             books[1].BookTitle = "Puterea prezentului";
             books[1].BookLanguage = "Romanian";
             books[1].BookAuthor = "Eckhart Tolle";
@@ -38,17 +38,11 @@ namespace AspNetSandbox
             return books;
         }
 
-
-        private bool GetBookByID(Book book)
-        {
-            return book.BookID == 1;
-        }
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
         public Book Get(int id)
         {
-            //GetBookByID(books[0], id);
-            return books.Single(GetBookByID);
+            return books.Single(book => book.BookId ==id);
         }
         
 

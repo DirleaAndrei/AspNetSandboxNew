@@ -7,7 +7,7 @@ namespace AspNetSandbox
 {
     public class Book
     {
-        public int BookID { get; set; }
+        public int BookId { get; set; }
 
         public string BookTitle { get; set; }
 
