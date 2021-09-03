@@ -38,12 +38,19 @@ namespace AspNetSandbox
             return books;
         }
 
+
+        private bool GetBookByID(Book book)
+        {
+            return book.BookID == 1;
+        }
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Book Get(int id)
         {
-            return "value";
+            //GetBookByID(books[0], id);
+            return books.Single(GetBookByID);
         }
+        
 
         // POST api/<ValuesController>
         [HttpPost]
@@ -62,5 +69,6 @@ namespace AspNetSandbox
         public void Delete(int id)
         {
         }
+
     }
 }
