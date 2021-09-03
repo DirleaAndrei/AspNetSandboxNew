@@ -30,6 +30,7 @@ namespace AspNetSendbox.Controllers
 
         }
 
+        [NonAction]
         public IEnumerable<WeatherForecast> ConvertResponseToWeatherForecast(string content, int days = 5)
         {
 
