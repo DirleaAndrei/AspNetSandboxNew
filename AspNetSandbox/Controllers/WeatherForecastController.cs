@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetSandbox;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
@@ -32,16 +33,16 @@ namespace AspNetSendbox.Controllers
 
         [HttpGet]
         [Route("City")]
-        public IEnumerable<WeatherForecast> GetCityCoordinates(string City)
+        public WeatherForecastCityCoordinates GetCityCoordinates(string City)
         {
-            var client = new RestClient("https://api.openweathermap.org/data/2.5/onecall?lat=45.657974&lon=25.601198&exclude=hourly,minutely&appid=5705b52fdd12e0753d98f978798de52a");
+            var client = new RestClient($"https://api.openweathermap.org/data/2.5/weather?q={City}&appid=5705b52fdd12e0753d98f978798de52a");
             client.Timeout = -1;
             var request = new RestRequest(Method.GET);
             IRestResponse response = client.Execute(request);
             //Console.WriteLine(response.Content);
 
 
-            return ConvertResponseToWeatherForecast(response.Content);
+            return GetCityCoordinatesFromOpenWeather(response.Content);
 
         }
 
@@ -69,6 +70,23 @@ namespace AspNetSendbox.Controllers
                 };
             })
             .ToArray();
+        }
+
+
+        [NonAction]
+        public WeatherForecastCityCoordinates GetCityCoordinatesFromOpenWeather(string content)
+        {
+
+            var json = JObject.Parse(content);
+
+            var jsonCoords = json["coord"];
+
+            return new WeatherForecastCityCoordinates
+            {
+                Latitude = jsonCoords.Value<int>("lat"),
+                Longitude = jsonCoords.Value<int>("lon")
+            };
+
         }
 
         private static int ExtractCelsiusTemperatureFromDailyWeather(JToken jsonDailyForecast)
