@@ -12,7 +12,7 @@ namespace AspNetSandbox.Tests
         public void ConvertResponseToWeatherForecastTest()
         {
             // Assume
-            string content = LoadJsonFromResource();
+            string content = LoadJsonFromResource("DataFromOpenWeatherAPI.json");
             var controller = new WeatherForecastController();
 
             // Act
@@ -29,7 +29,7 @@ namespace AspNetSandbox.Tests
         public void ConvertResponseToWeatherForecastAfterTomorrowTest()
         {
             // Assume
-            string content = LoadJsonFromResource();
+            string content = LoadJsonFromResource("DataFromOpenWeatherAPI.json");
             var controller = new WeatherForecastController();
 
             // Act
@@ -41,11 +41,27 @@ namespace AspNetSandbox.Tests
             Assert.Equal(20, weatherForecastForAfterTomorow.TemperatureC);
             Assert.Equal(new DateTime(2021, 9, 4), weatherForecastForAfterTomorow.Date);
         }
-        private string LoadJsonFromResource()
+
+        [Fact]
+        public void GetCityCoordinatesFromOpenWeatherTest()
+        {
+            // Assume
+            string content = LoadJsonFromResource("DataFromOpenWeatherApiWithCityCoordinates.json");
+            var controller = new WeatherForecastController();
+
+            // Act
+            var output = controller.GetCityCoordinatesFromOpenWeather(content);
+
+            // Assert
+            var weatherForecastCityCoordinates = ((WeatherForecastCityCoordinates)output);
+            Assert.Equal(26, weatherForecastCityCoordinates.Longitude);
+            Assert.Equal(44, weatherForecastCityCoordinates.Latitude);
+        }
+        private string LoadJsonFromResource(string jsonResponseOfApiFile)
         {
             var assembly = this.GetType().Assembly;
             var assemblyName = assembly.GetName().Name;
-            var resourceName = $"{assemblyName}.DataFromOpenWeatherAPI.json";
+            var resourceName = $"{assemblyName}.{jsonResponseOfApiFile}";
             var resourceStream = assembly.GetManifestResourceStream(resourceName);
             using (var tr = new StreamReader(resourceStream))
             {
