@@ -10,4 +10,4 @@ FROM mcr.microsoft.com/dotnet/aspnet:5.0
 WORKDIR /src
 COPY --from=build-env /src/publish .
 
-CMD ASPNETCORE_URLS=http://*:$PORT dotnet AspeNetSandbox.dll
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet AspNetSandbox.dll
