@@ -104,8 +104,12 @@
         "method": "GET",
         "timeout": 0,
     };
-
-
+    var a = "";
+    var settingsForCity = {
+        "url": $"/WeatherForecast{a}",
+        "method": "GET",
+        "timeout": 0,
+    };
 
     $.ajax(settings).done(function (response) {
         console.log(response);
