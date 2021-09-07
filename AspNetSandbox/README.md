@@ -8,17 +8,17 @@ docker build -t asp_net .
 to run
 
 ```
-docker run -d -p 8081:80 --name web_container_borys asp_net
+docker run -d -p 8081:80 --name web_container_andrei asp_net
 ```
 
 to stop container
 ```
-docker stop web_container_borys
+docker stop web_container_andrei
 ```
 
 to remove container
 ```
-docker rm web_container_borys
+docker rm web_container_andrei
 ```
 
 ## Deploy to heroku
@@ -36,10 +36,10 @@ heroku container:login
 
 Push container
 ```
-heroku container:push -a webapp-sandbox-borys web
+heroku container:push -a asp-net-sandbox-first web
 ```
 
 Release the container
 ```
-heroku container:release -a webapp-sandbox-borys web
+heroku container:release -a asp-net-sandbox-first web
 ```
