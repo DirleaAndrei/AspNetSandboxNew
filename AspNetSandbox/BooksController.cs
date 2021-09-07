@@ -12,9 +12,9 @@ namespace AspNetSandbox
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private List<Book> books;
+        private static List<Book> books;
 
-        public BooksController()
+        static BooksController()
         {
             books = new List<Book>();
 
@@ -58,7 +58,6 @@ namespace AspNetSandbox
             int id = books.Count+1;
             book.BookId = id;
             books.Add(book);
-
         }
 
         // PUT api/<ValuesController>/5
