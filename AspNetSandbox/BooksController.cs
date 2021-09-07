@@ -22,14 +22,14 @@ namespace AspNetSandbox
         [HttpGet]
         public IEnumerable<Book> Get()
         {
-            return booksService.Get();
+            return booksService.GetAllBooks();
         }
 
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
         public Book Get(int id)
         {
-            return booksService.Get(id);
+            return booksService.GetBookById(id);
         }
         
 
@@ -37,21 +37,21 @@ namespace AspNetSandbox
         [HttpPost]
         public void Post([FromBody] Book book)
         {
-            booksService.Post(book);
+            booksService.AddNewBook(book);
         }
 
         // PUT api/<ValuesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] Book updatedBook)
         {
-
+            booksService.UpdateBookById(id, updatedBook);
         }
 
         // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            booksService.Delete(id);
+            booksService.DeleteBookById(id);
         }
 
     }

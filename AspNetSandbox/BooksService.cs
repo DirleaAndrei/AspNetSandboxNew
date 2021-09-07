@@ -8,53 +8,67 @@ namespace AspNetSandbox
     public class BooksService : IBooksService
     {
         private List<Book> books;
+        private static int id = 0; 
 
         public BooksService()
         {
             books = new List<Book>();
 
-            books.Add(new Book
+            var book1 = new Book
             {
-                BookId = 0,
                 BookTitle = "Arta manipularii",
                 BookAuthor = "Kevin Dutton",
                 BookLanguage = "Romanian"
-            });
+            };
 
-            books.Add(new Book
+            var book2 = new Book
             {
-                BookId = 1,
                 BookTitle = "Puterea prezentului",
                 BookAuthor = "Eckhart Tolle",
                 BookLanguage = "Romanian"
-            });
+            };
+            AddNewBook(book1);
+            AddNewBook(book2);
+
         }
 
-        public IEnumerable<Book> Get()
+        public IEnumerable<Book> GetAllBooks()
         {
             return books;
         }
 
-        public Book Get(int id)
+        public Book GetBookById(int id)
         {
             return books.Single(book => book.BookId == id);
         }
 
-        public void Post(Book book)
+        public void AddNewBook(Book book)
         {
-            int id = books.Count;
-            book.BookId = id;
+            int BookId = id;
+            id += 1;
+            book.BookId = BookId;
             books.Add(book);
         }
 
-        public void Put(int id, string value)
+        public void UpdateBookById(int id, Book updatedBook)
         {
+            var bookToBeUpdated = books.Single(book => book.BookId == id);
+            if(bookToBeUpdated != null)
+            {
+                bookToBeUpdated.BookTitle = updatedBook.BookTitle;
+                bookToBeUpdated.BookAuthor = updatedBook.BookAuthor;
+                bookToBeUpdated.BookLanguage = updatedBook.BookLanguage;
+            }
+            
 
         }
 
-        public void Delete(int id)
+        public void DeleteBookById(int id)
         {
-            books.Remove(Get(id));
+            if (GetBookById(id) != null)
+            {
+                books.Remove(GetBookById(id));
+            }
         }
 
 
