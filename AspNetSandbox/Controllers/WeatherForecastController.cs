@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AspNetSandbox;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 
@@ -82,7 +80,7 @@ namespace AspNetSendbox.Controllers
             return new WeatherForecastCityCoordinates
             {
                 Latitude = jsonCoords.Value<int>("lat"),
-                Longitude = jsonCoords.Value<int>("lon")
+                Longitude = jsonCoords.Value<int>("lon"),
             };
 
         }

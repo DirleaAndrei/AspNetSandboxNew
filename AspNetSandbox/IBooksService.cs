@@ -2,6 +2,9 @@
 
 namespace AspNetSandbox
 {
+    /// <summary>
+    /// This is the interface for BooksService.
+    /// </summary>
     public interface IBooksService
     {
         void DeleteBookById(int id);

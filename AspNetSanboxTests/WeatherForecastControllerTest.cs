@@ -22,7 +22,7 @@ namespace AspNetSandbox.Tests
             var weatherForecastForTomorow = ((WeatherForecast[])output)[0];
             Assert.Equal("Clear", weatherForecastForTomorow.Summary);
             Assert.Equal(18, weatherForecastForTomorow.TemperatureC);
-            Assert.Equal(new DateTime(2021,9,3), weatherForecastForTomorow.Date);
+            Assert.Equal(new DateTime(2021, 9, 3), weatherForecastForTomorow.Date);
         }
 
         [Fact]
@@ -57,6 +57,7 @@ namespace AspNetSandbox.Tests
             Assert.Equal(26, weatherForecastCityCoordinates.Longitude);
             Assert.Equal(44, weatherForecastCityCoordinates.Latitude);
         }
+
         private string LoadJsonFromResource(string jsonResponseOfApiFile)
         {
             var assembly = this.GetType().Assembly;
