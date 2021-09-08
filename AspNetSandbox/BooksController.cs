@@ -52,7 +52,15 @@ namespace AspNetSandbox
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] Book updatedBook)
         {
-            booksService.UpdateBookById(id, updatedBook);
+            try
+            {
+                booksService.UpdateBookById(id, updatedBook);
+            }
+            catch (Exception e)
+            {
+                NotFound();
+            }
+            ;
         }
 
         // DELETE api/<ValuesController>/5
