@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="WeatherForecastController.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AspNetSandbox;
@@ -12,33 +16,31 @@ namespace AspNetSendbox.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-
-        private const float KELVIN_CONST = 273.15f;
+        private const float KELVINCONST = 273.15f;
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            var client = new RestClient("https://api.openweathermap.org/data/2.5/onecall?lat=45.657974&lon=25.601198&exclude=hourly,minutely&appid=5705b52fdd12e0753d98f978798de52a");
-            client.Timeout = -1;
+            var client = new RestClient("https://api.openweathermap.org/data/2.5/onecall?lat=45.657974&lon=25.601198&exclude=hourly,minutely&appid=5705b52fdd12e0753d98f978798de52a")
+            {
+                Timeout = -1,
+            };
             var request = new RestRequest(Method.GET);
             IRestResponse response = client.Execute(request);
-            //Console.WriteLine(response.Content);
 
-
-            return ConvertResponseToWeatherForecast(response.Content);
-
+            return this.ConvertResponseToWeatherForecast(response.Content);
         }
 
         [HttpGet]
-        [Route("City")]
-        public WeatherForecastCityCoordinates GetCityCoordinates(string City)
+        [Route("city")]
+        public WeatherForecastCityCoordinates GetCityCoordinates(string city)
         {
-            var client = new RestClient($"https://api.openweathermap.org/data/2.5/weather?q={City}&appid=5705b52fdd12e0753d98f978798de52a");
+            var client = new RestClient($"https://api.openweathermap.org/data/2.5/weather?q={city}&appid=5705b52fdd12e0753d98f978798de52a");
             client.Timeout = -1;
             var request = new RestRequest(Method.GET);
             IRestResponse response = client.Execute(request);
 
-            return GetCityCoordinatesFromOpenWeather(response.Content);
+            return this.GetCityCoordinatesFromOpenWeather(response.Content);
 
         }
 
@@ -46,9 +48,7 @@ namespace AspNetSendbox.Controllers
         [NonAction]
         public IEnumerable<WeatherForecast> ConvertResponseToWeatherForecast(string content, int days = 5)
         {
-
             var json = JObject.Parse(content);
-            
 
             var rng = new Random();
             return Enumerable.Range(1, days).Select(index =>
@@ -62,7 +62,7 @@ namespace AspNetSendbox.Controllers
                 {
                     Date = DateTimeOffset.FromUnixTimeSeconds(unixDateTime).Date,
                     TemperatureC = ExtractCelsiusTemperatureFromDailyWeather(jsonDailyForecast),
-                    Summary = weatherSummary
+                    Summary = weatherSummary,
                 };
             })
             .ToArray();
@@ -87,7 +87,7 @@ namespace AspNetSendbox.Controllers
 
         private static int ExtractCelsiusTemperatureFromDailyWeather(JToken jsonDailyForecast)
         {
-            return (int)Math.Round(jsonDailyForecast["temp"].Value<float>("day") - KELVIN_CONST);
+            return (int)Math.Round(jsonDailyForecast["temp"].Value<float>("day") - KELVINCONST);
         }
     }
 }
