@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace AspNetSandbox
+﻿namespace AspNetSandbox
 {
     public class Book
     {
@@ -14,7 +9,5 @@ namespace AspNetSandbox
         public string BookAuthor { get; set; }
 
         public string BookLanguage { get; set; }
-
-
     }
 }

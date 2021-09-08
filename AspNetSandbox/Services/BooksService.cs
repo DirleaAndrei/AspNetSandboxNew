@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-
 
 namespace AspNetSandbox
 {
-
     public class BooksService : IBooksService
     {
         private List<Book> books;
-        private static int id = 0; 
+        private static int id = 0;
 
         public BooksService()
         {
@@ -19,26 +16,23 @@ namespace AspNetSandbox
             {
                 BookTitle = "Arta manipularii",
                 BookAuthor = "Kevin Dutton",
-                BookLanguage = "Romanian"
+                BookLanguage = "Romanian",
             };
 
             var book2 = new Book
             {
                 BookTitle = "Puterea prezentului",
                 BookAuthor = "Eckhart Tolle",
-                BookLanguage = "Romanian"
+                BookLanguage = "Romanian",
             };
             AddNewBook(book1);
             AddNewBook(book2);
-
         }
 
         public static void ResetId()
         {
             id = 0;
         }
-
-        
 
         public IEnumerable<Book> GetAllBooks()
         {
@@ -52,8 +46,8 @@ namespace AspNetSandbox
 
         public void AddNewBook(Book book)
         {
-            int BookId = GetNewId();
-            book.BookId = BookId;
+            int bookId = GetNewId();
+            book.BookId = bookId;
             books.Add(book);
         }
 
@@ -72,10 +66,10 @@ namespace AspNetSandbox
 
         public void DeleteBookById(int id)
         {
-            if (GetBookById(id) != null)  books.Remove(GetBookById(id));
-
+            if (GetBookById(id) != null)
+            {
+                books.Remove(GetBookById(id));
+            }
         }
-
-
     }
 }

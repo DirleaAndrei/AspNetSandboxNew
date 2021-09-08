@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetSandbox
 {
@@ -13,19 +9,23 @@ namespace AspNetSandbox
     public class BooksController : ControllerBase
     {
         private readonly IBooksService booksService;
+
         public BooksController(IBooksService booksService)
         {
             this.booksService = booksService;
         }
 
-        // GET: api/<ValuesController>
         [HttpGet]
         public IEnumerable<Book> Get()
         {
             return booksService.GetAllBooks();
         }
 
-        // GET api/<ValuesController>/5
+        /// <summary>Gets the specified book by id.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        ///   Book object.
+        /// </returns>
         [HttpGet("{id}")]
         public ActionResult Get(int id)
         {
@@ -33,42 +33,40 @@ namespace AspNetSandbox
             {
                 return Ok(booksService.GetBookById(id));
             }
-            catch(Exception e)
+            catch (Exception)
             {
                 return NotFound();
             }
-            
         }
-        
 
-        // POST api/<ValuesController>
         [HttpPost]
         public void Post([FromBody] Book book)
         {
             booksService.AddNewBook(book);
         }
 
-        // PUT api/<ValuesController>/5
+        /// <summary>Updated book at specific id.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="updatedBook">The updated book.</param>
+        /// <returns>Action result.</returns>
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Book updatedBook)
+        public ActionResult Put(int id, [FromBody] Book updatedBook)
         {
             try
             {
                 booksService.UpdateBookById(id, updatedBook);
+                return Ok();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                NotFound();
+                return NotFound();
             }
-            ;
         }
 
-        // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
             booksService.DeleteBookById(id);
         }
-
     }
 }

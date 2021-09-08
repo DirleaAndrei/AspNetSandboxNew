@@ -1,8 +1,4 @@
-﻿// <copyright file="WeatherForecastController.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using AspNetSandbox;
@@ -12,12 +8,21 @@ using RestSharp;
 
 namespace AspNetSendbox.Controllers
 {
+    /// <summary>
+    /// Controller that allows us to get weather forecast.
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private const float KELVINCONST = 273.15f;
+        private const float KELVIN_CONST = 273.15f;
 
+        /// <summary>
+        /// Return weather forecast for 5 days.
+        /// </summary>
+        /// <returns>
+        /// Enumerable of weather forecast objects.
+        /// </returns>
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
@@ -28,7 +33,7 @@ namespace AspNetSendbox.Controllers
             var request = new RestRequest(Method.GET);
             IRestResponse response = client.Execute(request);
 
-            return this.ConvertResponseToWeatherForecast(response.Content);
+            return ConvertResponseToWeatherForecast(response.Content);
         }
 
         [HttpGet]
@@ -40,10 +45,8 @@ namespace AspNetSendbox.Controllers
             var request = new RestRequest(Method.GET);
             IRestResponse response = client.Execute(request);
 
-            return this.GetCityCoordinatesFromOpenWeather(response.Content);
-
+            return GetCityCoordinatesFromOpenWeather(response.Content);
         }
-
 
         [NonAction]
         public IEnumerable<WeatherForecast> ConvertResponseToWeatherForecast(string content, int days = 5)
@@ -52,7 +55,6 @@ namespace AspNetSendbox.Controllers
 
             var rng = new Random();
             return Enumerable.Range(1, days).Select(index =>
-
             {
                 var jsonDailyForecast = json["daily"][index];
                 var unixDateTime = jsonDailyForecast.Value<long>("dt");
@@ -68,11 +70,9 @@ namespace AspNetSendbox.Controllers
             .ToArray();
         }
 
-
         [NonAction]
         public WeatherForecastCityCoordinates GetCityCoordinatesFromOpenWeather(string content)
         {
-
             var json = JObject.Parse(content);
 
             var jsonCoords = json["coord"];
@@ -82,12 +82,11 @@ namespace AspNetSendbox.Controllers
                 Latitude = jsonCoords.Value<int>("lat"),
                 Longitude = jsonCoords.Value<int>("lon"),
             };
-
         }
 
         private static int ExtractCelsiusTemperatureFromDailyWeather(JToken jsonDailyForecast)
         {
-            return (int)Math.Round(jsonDailyForecast["temp"].Value<float>("day") - KELVINCONST);
+            return (int)Math.Round(jsonDailyForecast["temp"].Value<float>("day") - KELVIN_CONST);
         }
     }
 }
