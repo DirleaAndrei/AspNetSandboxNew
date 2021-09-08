@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 
@@ -32,6 +33,13 @@ namespace AspNetSandbox
 
         }
 
+        public static void ResetId()
+        {
+            id = 0;
+        }
+
+        
+
         public IEnumerable<Book> GetAllBooks()
         {
             return books;
@@ -39,36 +47,33 @@ namespace AspNetSandbox
 
         public Book GetBookById(int id)
         {
-            return books.Single(book => book.BookId == id);
+            return books.Single(_ => _.BookId == id);
         }
 
         public void AddNewBook(Book book)
         {
-            int BookId = id;
-            id += 1;
+            int BookId = GetNewId();
             book.BookId = BookId;
             books.Add(book);
         }
 
+        private static int GetNewId()
+        {
+            return id++;
+        }
+
         public void UpdateBookById(int id, Book updatedBook)
         {
-            var bookToBeUpdated = books.Single(book => book.BookId == id);
-            if(bookToBeUpdated != null)
-            {
-                bookToBeUpdated.BookTitle = updatedBook.BookTitle;
-                bookToBeUpdated.BookAuthor = updatedBook.BookAuthor;
-                bookToBeUpdated.BookLanguage = updatedBook.BookLanguage;
-            }
-            
-
+            var bookToBeUpdated = books.Single(_ => _.BookId == id);
+            bookToBeUpdated.BookTitle = updatedBook.BookTitle;
+            bookToBeUpdated.BookAuthor = updatedBook.BookAuthor;
+            bookToBeUpdated.BookLanguage = updatedBook.BookLanguage;
         }
 
         public void DeleteBookById(int id)
         {
-            if (GetBookById(id) != null)
-            {
-                books.Remove(GetBookById(id));
-            }
+            if (GetBookById(id) != null)  books.Remove(GetBookById(id));
+
         }
 
 

@@ -5,11 +5,16 @@ namespace BooksServiceTests
 {
     public class BooksServiceTests
     {
+        private BooksService booksService ;
+
         [Fact]
         public void BooksServiceIdTests()
         {
             // Asume
-            var booksService = new BooksService();
+            BooksService.ResetId();
+            booksService = new BooksService();
+            
+
 
             // Act
             booksService.AddNewBook(new Book {
@@ -34,7 +39,9 @@ namespace BooksServiceTests
         public void BooksServiceUpdateBookTests()
         {
             // Asume
-            var booksService = new BooksService();
+            BooksService.ResetId();
+            booksService = new BooksService();
+            
 
             // Act
             booksService.AddNewBook(new Book
@@ -43,7 +50,7 @@ namespace BooksServiceTests
                 BookAuthor = "Mark Forsyth Test1",
                 BookLanguage = "Romanian"
             });
-            booksService.UpdateBookById(4, new Book
+            booksService.UpdateBookById(2, new Book
             {
                 BookTitle = "Scurta istorie a betiei Edited",
                 BookAuthor = "Mark Forsyth Edited",
@@ -52,7 +59,7 @@ namespace BooksServiceTests
 
 
             // Assert
-            Assert.Equal("Scurta istorie a betiei Edited", booksService.GetBookById(4).BookTitle);
+            Assert.Equal("Scurta istorie a betiei Edited", booksService.GetBookById(2).BookTitle);
         }
     }
 }

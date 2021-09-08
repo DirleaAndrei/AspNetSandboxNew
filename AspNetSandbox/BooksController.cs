@@ -27,9 +27,17 @@ namespace AspNetSandbox
 
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
-        public Book Get(int id)
+        public ActionResult Get(int id)
         {
-            return booksService.GetBookById(id);
+            try
+            {
+                return Ok(booksService.GetBookById(id));
+            }
+            catch(Exception e)
+            {
+                return NotFound();
+            }
+            
         }
         
 
