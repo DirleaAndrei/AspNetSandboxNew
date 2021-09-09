@@ -51,9 +51,8 @@ namespace AspNetSandbox
         {
             if (env.IsDevelopment())
             {
-                app.UseMigrationsEndPoint();
-
                 app.UseDeveloperExceptionPage();
+                app.UseMigrationsEndPoint();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ApiSendbox v1"));
             }
@@ -79,11 +78,11 @@ namespace AspNetSandbox
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
-                endpoints.MapControllers();
             });
         }
     }

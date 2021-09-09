@@ -14,7 +14,7 @@ namespace AspNetSandbox.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BookTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BookAuthor = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BookLanguage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BookLanguage = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

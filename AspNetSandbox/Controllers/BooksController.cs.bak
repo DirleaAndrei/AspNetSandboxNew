@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Threading.Tasks;
-using AspNetSandbox.Data;
+using System.Collections.Generic;
 using AspNetSandbox.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AspNetSandbox
 {
@@ -11,7 +9,7 @@ namespace AspNetSandbox
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+    	private readonly ApplicationDbContext _context;
         private readonly IBooksService booksService;
 
         public BooksController(ApplicationDbContext context)
@@ -22,7 +20,7 @@ namespace AspNetSandbox
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _context.Books.ToListAsync());
+            return await _context.Books.ToListAsync();
         }
 
         /// <summary>Gets the specified book by id.</summary>
@@ -35,7 +33,7 @@ namespace AspNetSandbox
         {
             try
             {
-                var book = await _context.Books
+            	var book = await _context.Books
                 .FirstOrDefaultAsync(m => m.BookId == id);
                 return Ok(book);
             }
@@ -46,17 +44,13 @@ namespace AspNetSandbox
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Book book)
+        public void Post([FromBody] Book book)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(book);
                 await _context.SaveChangesAsync();
-                return Ok();
-            }
-            else
-            {
-                return BadRequest();
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -65,38 +59,23 @@ namespace AspNetSandbox
         /// <param name="updatedBook">The updated book.</param>
         /// <returns>Action result.</returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Book updatedBook)
+        public ActionResult Put(int id, [FromBody] Book updatedBook)
         {
-            if (id != updatedBook.BookId)
+            try
+            {
+                booksService.UpdateBookById(id, updatedBook);
+                return Ok();
+            }
+            catch (Exception)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-
-                    _context.Update(updatedBook);
-                    await _context.SaveChangesAsync();
-                    return Ok();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    return NotFound();
-                }
-            }
-
-            return Ok();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public void Delete(int id)
         {
-            var book = await _context.Books.FindAsync(id);
-            _context.Books.Remove(book);
-            await _context.SaveChangesAsync();
-            return Ok();
+            booksService.DeleteBookById(id);
         }
     }
 }

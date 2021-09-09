@@ -47,3 +47,6 @@ dotnet_diagnostic.SA1200.severity = none
 
 # SA1601: Partial elements should be documented
 dotnet_diagnostic.SA1601.severity = none
+
+# SA1137: Elements should have the same indentation
+dotnet_diagnostic.SA1137.severity = none
