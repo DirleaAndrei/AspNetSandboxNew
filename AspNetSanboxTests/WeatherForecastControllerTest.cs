@@ -1,7 +1,7 @@
-using AspNetSendbox;
-using AspNetSendbox.Controllers;
 using System;
 using System.IO;
+using AspNetSendbox;
+using AspNetSendbox.Controllers;
 using Xunit;
 
 namespace AspNetSandbox.Tests
@@ -53,7 +53,7 @@ namespace AspNetSandbox.Tests
             var output = controller.GetCityCoordinatesFromOpenWeather(content);
 
             // Assert
-            var weatherForecastCityCoordinates = ((WeatherForecastCityCoordinates)output);
+            var weatherForecastCityCoordinates = output;
             Assert.Equal(26, weatherForecastCityCoordinates.Longitude);
             Assert.Equal(44, weatherForecastCityCoordinates.Latitude);
         }
@@ -70,5 +70,4 @@ namespace AspNetSandbox.Tests
             }
         }
     }
-    
 }
