@@ -1,4 +1,4 @@
-﻿namespace AspNetSandbox
+﻿namespace AspNetSandbox.Models
 {
     public class Book
     {

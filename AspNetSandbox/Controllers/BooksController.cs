@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AspNetSandbox.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetSandbox

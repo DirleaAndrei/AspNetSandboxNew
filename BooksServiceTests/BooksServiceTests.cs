@@ -1,4 +1,5 @@
 using AspNetSandbox;
+using AspNetSandbox.Models;
 using Xunit;
 
 namespace BooksServiceTests
