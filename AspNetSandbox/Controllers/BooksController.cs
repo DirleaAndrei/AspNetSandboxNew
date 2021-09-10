@@ -67,27 +67,25 @@ namespace AspNetSandbox
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Book updatedBook)
         {
-            if (id != updatedBook.BookId)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            var bookToUpdate = await _context.Books.FindAsync(id);
+
+            if (bookToUpdate != null)
             {
-                try
-                {
-
-                    _context.Update(updatedBook);
-                    await _context.SaveChangesAsync();
-                    return Ok();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    return NotFound();
-                }
+                bookToUpdate.BookTitle = updatedBook.BookTitle;
+                bookToUpdate.BookAuthor = updatedBook.BookAuthor;
+                bookToUpdate.BookLanguage = updatedBook.BookLanguage;
+                await _context.SaveChangesAsync();
+                return Ok();
             }
-
-            return Ok();
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpDelete("{id}")]
