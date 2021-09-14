@@ -11,18 +11,17 @@ namespace AspNetSandbox
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-        private readonly IBookRepository booksService;
+        private readonly IBookRepository repository;
 
-        public BooksController(ApplicationDbContext context)
+        public BooksController(IBookRepository repository)
         {
-            _context = context;
+            this.repository = repository;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _context.Books.ToListAsync());
+            return Ok(repository.GetAllBooks());
         }
 
         /// <summary>Gets the specified book by id.</summary>
@@ -33,31 +32,15 @@ namespace AspNetSandbox
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            try
-            {
-                var book = await _context.Books
-                .FirstOrDefaultAsync(m => m.BookId == id);
-                return Ok(book);
-            }
-            catch (Exception)
-            {
-                return NotFound();
-            }
+            var book = repository.GetBookById(id);
+            return Ok(book);
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Book book)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(book);
-                await _context.SaveChangesAsync();
-                return Ok();
-            }
-            else
-            {
-                return BadRequest();
-            }
+            repository.AddNewBook(book);
+            return Ok();
         }
 
         /// <summary>Updated book at specific id.</summary>
@@ -67,33 +50,15 @@ namespace AspNetSandbox
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Book updatedBook)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            repository.UpdateBookById(id, updatedBook);
+            return Ok();
 
-            var bookToUpdate = await _context.Books.FindAsync(id);
-
-            if (bookToUpdate != null)
-            {
-                bookToUpdate.BookTitle = updatedBook.BookTitle;
-                bookToUpdate.BookAuthor = updatedBook.BookAuthor;
-                bookToUpdate.BookLanguage = updatedBook.BookLanguage;
-                await _context.SaveChangesAsync();
-                return Ok();
-            }
-            else
-            {
-                return NotFound();
-            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var book = await _context.Books.FindAsync(id);
-            _context.Books.Remove(book);
-            await _context.SaveChangesAsync();
+            repository.DeleteBookById(id);
             return Ok();
         }
     }
