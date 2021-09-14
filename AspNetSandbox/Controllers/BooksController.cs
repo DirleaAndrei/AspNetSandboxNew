@@ -12,7 +12,7 @@ namespace AspNetSandbox
     public class BooksController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly IBooksService booksService;
+        private readonly IBookRepository booksService;
 
         public BooksController(ApplicationDbContext context)
         {

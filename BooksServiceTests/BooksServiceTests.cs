@@ -4,16 +4,16 @@ using Xunit;
 
 namespace BooksServiceTests
 {
-    public class BooksServiceTests
+    public class BooksInMemoryRepositoryTests
     {
-        private BooksService booksService ;
+        private BooksInMemoryRepository booksService ;
 
         [Fact]
         public void BooksServiceIdTests()
         {
             // Asume
-            BooksService.ResetId();
-            booksService = new BooksService();
+            BooksInMemoryRepository.ResetId();
+            booksService = new BooksInMemoryRepository();
             
 
 
@@ -40,8 +40,8 @@ namespace BooksServiceTests
         public void BooksServiceUpdateBookTests()
         {
             // Asume
-            BooksService.ResetId();
-            booksService = new BooksService();
+            BooksInMemoryRepository.ResetId();
+            booksService = new BooksInMemoryRepository();
             
 
             // Act

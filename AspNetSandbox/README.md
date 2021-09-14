@@ -2,13 +2,13 @@
 
 Build in container
 ```
-docker build -t asp_net_updated .
+docker build -t asp_net_with_db .
 ```
 
 to run
 
 ```
-docker run -d -p 8081:80 --name web_container_andrei asp_net_updated
+docker run -d -p 8081:80 --name web_container_andrei asp_net_with_db
 ```
 
 to stop container
@@ -36,10 +36,10 @@ heroku container:login
 
 Push container
 ```
-heroku container:push -a asp-sandbox-update web
+heroku container:push -a deploy-with-db web
 ```
 
 Release the container
 ```
-heroku container:release -a asp-sandbox-update web
+heroku container:release -a deploy-with-db web
 ```

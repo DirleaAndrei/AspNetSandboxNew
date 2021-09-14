@@ -13,6 +13,7 @@ namespace AspNetSandbox.Data
             : base(options)
         {
         }
+
         public DbSet<AspNetSandbox.Models.Book> Books { get; set; }
     }
 }
