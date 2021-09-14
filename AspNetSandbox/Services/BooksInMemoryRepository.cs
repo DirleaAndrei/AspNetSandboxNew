@@ -2,7 +2,7 @@
 using System.Linq;
 using AspNetSandbox.Models;
 
-namespace AspNetSandbox
+namespace AspNetSandbox.Services
 {
     public class BooksInMemoryRepository : IBookRepository
     {
