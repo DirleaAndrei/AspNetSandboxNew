@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AspNetSandbox.DTOs;
 using AspNetSandbox.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetSandbox
@@ -10,14 +12,16 @@ namespace AspNetSandbox
     public class BooksController : ControllerBase
     {
         private readonly IBookRepository repository;
+        private readonly IMapper mapper;
 
-        public BooksController(IBookRepository repository)
+        public BooksController(IBookRepository repository, IMapper mapper)
         {
             this.repository = repository;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             return Ok(repository.GetAllBooks());
         }
@@ -28,24 +32,23 @@ namespace AspNetSandbox
         ///   Book object.
         /// </returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public IActionResult Get(int id)
         {
-            try
+            var book = repository.GetBookById(id);
+            if (book != null)
             {
-                var book = repository.GetBookById(id);
                 return Ok(book);
             }
-            catch (Exception e)
-            {
-                return NotFound(e);
-            }
+
+            return NotFound();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Book book)
+        public IActionResult Post([FromBody] CreateBookDto bookDto)
         {
             if (ModelState.IsValid)
             {
+                Book book = mapper.Map<Book>(bookDto);
                 repository.AddNewBook(book);
                 return Ok();
             }
@@ -55,14 +58,14 @@ namespace AspNetSandbox
 
         /// <summary>Updated book at specific id.</summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="updatedBook">The updated book.</param>
+        /// <param name="bookDto">The updated book.</param>
         /// <returns>Action result.</returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Book updatedBook)
+        public IActionResult Put(int id, [FromBody] CreateBookDto bookDto)
         {
+            Book updatedBook = mapper.Map<Book>(bookDto);
             repository.UpdateBookById(id, updatedBook);
             return Ok();
-
         }
 
         [HttpDelete("{id}")]
