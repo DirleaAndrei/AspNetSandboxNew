@@ -1,6 +1,5 @@
 ﻿using AspNetSandbox.Data;
 using AspNetSandbox.Models;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,17 +37,14 @@ namespace AspNetSandbox.Services
         public Book GetBookById(int id)
         {
             var book = _context.Books
-            .FirstOrDefaultAsync(m => m.BookId == id);
+            .FirstOrDefault(m => m.BookId == id);
             return book;
         }
 
         public void UpdateBookById(int id, Book updatedBook)
         {
-
-            var bookToUpdate = _context.Books.FindAsync(id);
-                bookToUpdate.BookTitle = updatedBook.BookTitle;
-                bookToUpdate.BookAuthor = updatedBook.BookAuthor;
-                bookToUpdate.BookLanguage = updatedBook.BookLanguage;
+            _context.Update(updatedBook);
+            _context.SaveChanges();
         }
     }
 }
