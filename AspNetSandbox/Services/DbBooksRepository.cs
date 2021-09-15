@@ -17,13 +17,13 @@ namespace AspNetSandbox.Services
         public void AddNewBook(Book book)
         {
             _context.Add(book);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public void DeleteBookById(int id)
         {
             _context.Books.Remove(GetBookById(id));
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public IEnumerable<Book> GetAllBooks()
