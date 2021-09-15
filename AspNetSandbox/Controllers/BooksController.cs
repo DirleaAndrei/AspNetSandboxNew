@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AspNetSandbox.Data;
+using AspNetSandbox.DTOs;
 using AspNetSandbox.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AspNetSandbox
 {
@@ -11,18 +11,19 @@ namespace AspNetSandbox
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-        private readonly IBookRepository booksService;
+        private readonly IBookRepository repository;
+        private readonly IMapper mapper;
 
-        public BooksController(ApplicationDbContext context)
+        public BooksController(IBookRepository repository, IMapper mapper)
         {
-            _context = context;
+            this.repository = repository;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
-            return Ok(await _context.Books.ToListAsync());
+            return Ok(repository.GetAllBooks());
         }
 
         /// <summary>Gets the specified book by id.</summary>
@@ -31,69 +32,46 @@ namespace AspNetSandbox
         ///   Book object.
         /// </returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public IActionResult Get(int id)
         {
-            try
+            var book = repository.GetBookById(id);
+            if (book != null)
             {
-                var book = await _context.Books
-                .FirstOrDefaultAsync(m => m.BookId == id);
                 return Ok(book);
             }
-            catch (Exception)
-            {
-                return NotFound();
-            }
+
+            return NotFound();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Book book)
+        public IActionResult Post([FromBody] CreateBookDto bookDto)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(book);
-                await _context.SaveChangesAsync();
+                Book book = mapper.Map<Book>(bookDto);
+                repository.AddNewBook(book);
                 return Ok();
             }
-            else
-            {
-                return BadRequest();
-            }
+
+            return BadRequest();
         }
 
         /// <summary>Updated book at specific id.</summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="updatedBook">The updated book.</param>
+        /// <param name="bookDto">The updated book.</param>
         /// <returns>Action result.</returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Book updatedBook)
+        public IActionResult Put(int id, [FromBody] CreateBookDto bookDto)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var bookToUpdate = await _context.Books.FindAsync(id);
-
-            if (bookToUpdate != null)
-            {
-                bookToUpdate.BookTitle = updatedBook.BookTitle;
-                bookToUpdate.BookAuthor = updatedBook.BookAuthor;
-                bookToUpdate.BookLanguage = updatedBook.BookLanguage;
-                await _context.SaveChangesAsync();
-                return Ok();
-            }
-            else
-            {
-                return NotFound();
-            }
+            Book updatedBook = mapper.Map<Book>(bookDto);
+            repository.UpdateBookById(id, updatedBook);
+            return Ok();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            var book = await _context.Books.FindAsync(id);
-            _context.Books.Remove(book);
-            await _context.SaveChangesAsync();
+            repository.DeleteBookById(id);
             return Ok();
         }
     }
