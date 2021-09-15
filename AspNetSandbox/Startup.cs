@@ -31,10 +31,7 @@ namespace AspNetSandbox
                 options.UseNpgsql(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
-
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-
+            services.AddSignalR();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllers();
             services.AddRazorPages();
@@ -80,6 +77,7 @@ namespace AspNetSandbox
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<MessageHub>("/messagehub");
                 endpoints.MapControllers();
                 endpoints.MapControllerRoute(
                     name: "default",
