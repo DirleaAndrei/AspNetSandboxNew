@@ -1,8 +1,7 @@
-﻿using AspNetSandbox.Data;
-using AspNetSandbox.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using AspNetSandbox.Data;
+using AspNetSandbox.Models;
 
 namespace AspNetSandbox.Services
 {
@@ -17,14 +16,12 @@ namespace AspNetSandbox.Services
 
         public void AddNewBook(Book book)
         {
-
-                _context.Add(book);
-                _context.SaveChangesAsync();
+            _context.Add(book);
+            _context.SaveChangesAsync();
         }
 
         public void DeleteBookById(int id)
         {
-            throw new NotImplementedException();
             _context.Books.Remove(GetBookById(id));
             _context.SaveChangesAsync();
         }
@@ -43,7 +40,11 @@ namespace AspNetSandbox.Services
 
         public void UpdateBookById(int id, Book updatedBook)
         {
-            _context.Update(updatedBook);
+            var selectedBook = GetBookById(id);
+            selectedBook.BookTitle = updatedBook.BookTitle;
+            selectedBook.BookAuthor = updatedBook.BookAuthor;
+            selectedBook.BookLanguage = updatedBook.BookLanguage;
+            _context.Update(selectedBook);
             _context.SaveChanges();
         }
     }

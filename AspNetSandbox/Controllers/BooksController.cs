@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AspNetSandbox.Data;
 using AspNetSandbox.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AspNetSandbox
 {
@@ -32,15 +30,27 @@ namespace AspNetSandbox
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var book = repository.GetBookById(id);
-            return Ok(book);
+            try
+            {
+                var book = repository.GetBookById(id);
+                return Ok(book);
+            }
+            catch (Exception e)
+            {
+                return NotFound(e);
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Book book)
         {
-            repository.AddNewBook(book);
-            return Ok();
+            if (ModelState.IsValid)
+            {
+                repository.AddNewBook(book);
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
         /// <summary>Updated book at specific id.</summary>
@@ -56,7 +66,7 @@ namespace AspNetSandbox
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
         {
             repository.DeleteBookById(id);
             return Ok();
