@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AspNetSandbox.DTOs;
 using AspNetSandbox.Models;
@@ -35,7 +34,7 @@ namespace AspNetSandbox
                 readBooksDto.Add(readBookDto);
             }
 
-            await hubContext.Clients.All.SendAsync("GetBooks", repository.GetAllBooks());
+            await hubContext.Clients.All.SendAsync("GetBooks", readBooksDto);
             return Ok(readBooksDto);
         }
 
@@ -45,7 +44,7 @@ namespace AspNetSandbox
         ///   Book object.
         /// </returns>
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             if (id == null)
             {
@@ -54,9 +53,11 @@ namespace AspNetSandbox
 
             var book = repository.GetBookById(id);
             ReadBookDto readBookDto = mapper.Map<ReadBookDto>(book);
+            await hubContext.Clients.All.SendAsync("SpecificBook", readBookDto);
             if (book != null)
             {
                 return Ok(readBookDto);
+
             }
 
             return NotFound();
@@ -85,9 +86,9 @@ namespace AspNetSandbox
         {
             if (repository.GetBookById(id) != null)
             {
-                Book updatedBook = mapper.Map<Book>(bookDto);
-                repository.UpdateBookById(id, updatedBook);
-                await hubContext.Clients.All.SendAsync("UpdatedBook", updatedBook);
+                Book updatedBookDto = mapper.Map<Book>(bookDto);
+                repository.UpdateBookById(id, updatedBookDto);
+                await hubContext.Clients.All.SendAsync("UpdatedBook", repository.GetBookById(id));
                 return Ok();
             }
 
@@ -97,8 +98,10 @@ namespace AspNetSandbox
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            var book = repository.GetBookById(id);
+            ReadBookDto readBookDto = mapper.Map<ReadBookDto>(book);
             repository.DeleteBookById(id);
-            await hubContext.Clients.All.SendAsync("DeletedBook");
+            await hubContext.Clients.All.SendAsync("BookDeleted", readBookDto);
             return Ok();
         }
     }

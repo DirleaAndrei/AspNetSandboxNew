@@ -40,8 +40,10 @@ namespace AspNetSendbox.Controllers
         [Route("city")]
         public WeatherForecastCityCoordinates GetCityCoordinates(string city)
         {
-            var client = new RestClient($"https://api.openweathermap.org/data/2.5/weather?q={city}&appid=5705b52fdd12e0753d98f978798de52a");
-            client.Timeout = -1;
+            var client = new RestClient($"https://api.openweathermap.org/data/2.5/weather?q={city}&appid=5705b52fdd12e0753d98f978798de52a")
+            {
+                Timeout = -1,
+            };
             var request = new RestRequest(Method.GET);
             IRestResponse response = client.Execute(request);
 

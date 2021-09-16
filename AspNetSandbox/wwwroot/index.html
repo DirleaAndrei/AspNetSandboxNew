@@ -24,7 +24,7 @@
             Edit book
         </button>
     </div>
-    <!-- Get all elements from database -->
+    <!-- Table Header -->
     <div id="div1">
         <table style="width:100%" id="tb">
             <tr>
@@ -47,11 +47,8 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
 <script src="./lib/jquery/dist/jquery.min.js"></script>
-<script src="./lib/microsoft-signalr/signalr.min.js"></script>
-<script src="./js/books.js"></script>
 <script>
-
-    var table = document.getElementById('tb');
+    var table = $('#tb');
     var currentBook = 0;
 
     async function GetAllData() {
@@ -62,30 +59,30 @@
         };
         await $.ajax(getBooks).done(function (response) {
             response.forEach(book => {
-                let tr = document.createElement('tr');
-                tr.id = book.bookId;
-                let tdTitle = document.createElement('td');
-                tdTitle.appendChild(document.createTextNode(book.bookTitle));
-                let tdAuthor = document.createElement('td');
-                tdAuthor.appendChild(document.createTextNode(book.bookAuthor));
-                let tdLanguage = document.createElement('td');
-                tdLanguage.appendChild(document.createTextNode(book.bookLanguage));
-                let tdActions = document.createElement('td');
-                let editBook = document.createElement('button');
-                let deleteBook = document.createElement('button');
-                editBook.classList.add("edit");
-                editBook.appendChild(document.createTextNode("Edit"));
-                editBook.addEventListener('click', GetBookToEdit);
-                deleteBook.classList.add("delete");
-                deleteBook.appendChild(document.createTextNode("Delete"));
-                deleteBook.addEventListener('click', DeleteBook);
-                table.appendChild(tr);
-                tr.appendChild(tdTitle);
-                tr.appendChild(tdAuthor);
-                tr.appendChild(tdLanguage);
-                tr.appendChild(tdActions);
-                tdActions.appendChild(editBook);
-                tdActions.appendChild(deleteBook);
+                //let tr = document.createElement('tr');
+                //tr.id = book.bookId;
+                //let tdTitle = document.createElement('td');
+                //tdTitle.appendChild(document.createTextNode(book.bookTitle));
+                //let tdAuthor = document.createElement('td');
+                //tdAuthor.appendChild(document.createTextNode(book.bookAuthor));
+                //let tdLanguage = document.createElement('td');
+                //tdLanguage.appendChild(document.createTextNode(book.bookLanguage));
+                //let tdActions = document.createElement('td');
+                //let editBook = document.createElement('button');
+                //let deleteBook = document.createElement('button');
+                //editBook.classList.add("edit");
+                //editBook.appendChild(document.createTextNode("Edit"));
+                //editBook.addEventListener('click', GetBookToEdit);
+                //deleteBook.classList.add("delete");
+                //deleteBook.appendChild(document.createTextNode("Delete"));
+                //deleteBook.addEventListener('click', DeleteBook);
+                //table.appendChild(tr);
+                //tr.appendChild(tdTitle);
+                //tr.appendChild(tdAuthor);
+                //tr.appendChild(tdLanguage);
+                //tr.appendChild(tdActions);
+                //tdActions.appendChild(editBook);
+                //tdActions.appendChild(deleteBook);
             })
         });
     }
@@ -106,47 +103,30 @@
             }),
         };
 
-        await $.ajax(postBook).done(function (response) {
-            console.log(response);
-        });
-        $("#book-title").val("");
-        $("#book-author").val("");
-        $("#book-language").val("");
-
+        await $.ajax(postBook).done();
     }
 
-    async function DeleteBook() {
+    async function DeleteBook(id) {
         let deleteBook = {
-            "url": "/api/books/" + this.parentNode.parentNode.id,
+            "url": "/api/books/" + id,
             "method": "DELETE",
             "timeout": 0,
         };
-
-        await $.ajax(deleteBook).done(function (response) {
-            console.log(response);
-        });
-        document.location.reload();
+        await $.ajax(deleteBook).done();
     }
-    async function GetBookToEdit() {
+
+    async function GetBookToEdit(id) {
         var getBook = {
-            "url": "/api/books/" + this.parentNode.parentNode.id,
+            "url": "/api/books/" + id,
             "method": "GET",
             "timeout": 0,
         };
-
         await $.ajax(getBook).done(function (response) {
-            console.log(response);
-            $("#book-title").val(response.bookTitle);
-            $("#book-author").val(response.bookAuthor);
-            $("#book-language").val(response.bookLanguage);
             currentBook = response.bookId;
         });
-        document.getElementById("add-book-button").style.display = "none";
-        document.getElementById("edit-book-button").style.display = "block";
     }
 
     async function EditBook() {
-
         var updateBook = {
             "url": "/api/books/" + currentBook,
             "method": "PUT",
@@ -160,14 +140,10 @@
                 "bookLanguage": $("#book-language").val()
             }),
         };
-
-        await $.ajax(updateBook).done(function (response) {
-            console.log(response);
-        });
-        document.location.reload();
+        await $.ajax(updateBook).done();
     }
-
 </script>
-
+<script src="./lib/microsoft-signalr/signalr.min.js"></script>
+<script src="./js/books.js"></script>
 
 </html>
