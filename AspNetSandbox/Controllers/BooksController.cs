@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using AspNetSandbox.DTOs;
 using AspNetSandbox.Models;
 using AutoMapper;
@@ -25,8 +27,16 @@ namespace AspNetSandbox
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+            var books = repository.GetAllBooks();
+            List<ReadBookDto> readBooksDto = new ();
+            foreach (Book book in books)
+            {
+                ReadBookDto readBookDto = mapper.Map<ReadBookDto>(book);
+                readBooksDto.Add(readBookDto);
+            }
+
             await hubContext.Clients.All.SendAsync("GetBooks", repository.GetAllBooks());
-            return Ok(repository.GetAllBooks());
+            return Ok(readBooksDto);
         }
 
         /// <summary>Gets the specified book by id.</summary>
