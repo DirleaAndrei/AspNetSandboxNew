@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AspNetSandbox.DTOs;
 using AspNetSandbox.Models;
 using AutoMapper;
@@ -24,8 +23,9 @@ namespace AspNetSandbox
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
+            await hubContext.Clients.All.SendAsync("GetBooks", repository.GetAllBooks());
             return Ok(repository.GetAllBooks());
         }
 
@@ -52,13 +52,13 @@ namespace AspNetSandbox
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] CreateBookDto bookDto)
+        public async Task<IActionResult> Post([FromBody] CreateBookDto bookDto)
         {
             if (ModelState.IsValid)
             {
                 Book book = mapper.Map<Book>(bookDto);
                 repository.AddNewBook(book);
-                hubContext.Clients.All.SendAsync("BookCreated", book);
+                await hubContext.Clients.All.SendAsync("BookCreated", book);
                 return Ok();
             }
 
@@ -70,17 +70,24 @@ namespace AspNetSandbox
         /// <param name="bookDto">The updated book.</param>
         /// <returns>Action result.</returns>
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] CreateBookDto bookDto)
+        public async Task<IActionResult> Put(int id, [FromBody] CreateBookDto bookDto)
         {
-            Book updatedBook = mapper.Map<Book>(bookDto);
-            repository.UpdateBookById(id, updatedBook);
-            return Ok();
+            if (repository.GetBookById(id) != null)
+            {
+                Book updatedBook = mapper.Map<Book>(bookDto);
+                repository.UpdateBookById(id, updatedBook);
+                await hubContext.Clients.All.SendAsync("UpdatedBook", updatedBook);
+                return Ok();
+            }
+
+            return NotFound();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             repository.DeleteBookById(id);
+            await hubContext.Clients.All.SendAsync("DeletedBook");
             return Ok();
         }
     }
