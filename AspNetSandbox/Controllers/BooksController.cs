@@ -43,9 +43,10 @@ namespace AspNetSandbox
             }
 
             var book = repository.GetBookById(id);
+            ReadBookDto readBookDto = mapper.Map<ReadBookDto>(book);
             if (book != null)
             {
-                return Ok(book);
+                return Ok(readBookDto);
             }
 
             return NotFound();
