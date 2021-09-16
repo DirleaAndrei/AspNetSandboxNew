@@ -9,5 +9,7 @@
         public string BookAuthor { get; set; }
 
         public string BookLanguage { get; set; }
+
+        public decimal PurchasePrice { get; set; }
     }
 }
