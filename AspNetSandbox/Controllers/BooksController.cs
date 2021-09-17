@@ -27,12 +27,7 @@ namespace AspNetSandbox
         public async Task<IActionResult> Get()
         {
             var books = repository.GetAllBooks();
-            List<ReadBookDto> readBooksDto = new ();
-            foreach (Book book in books)
-            {
-                ReadBookDto readBookDto = mapper.Map<ReadBookDto>(book);
-                readBooksDto.Add(readBookDto);
-            }
+            var readBooksDto = mapper.Map<IEnumerable<ReadBookDto>>(books);
 
             await hubContext.Clients.All.SendAsync("GetBooks", readBooksDto);
             return Ok(readBooksDto);
