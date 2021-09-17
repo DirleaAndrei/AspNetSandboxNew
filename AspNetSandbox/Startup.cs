@@ -53,12 +53,15 @@ namespace AspNetSandbox
                 return ConvertConnectionString(connectionString);
             }
 
+            //Replace Default Connection with ConvertConnectionString(connectionString)
             return Configuration.GetConnectionString("DefaultConnection");
         }
 
         public static string ConvertConnectionString(string connectionString)
         {
-            throw new NotImplementedException();
+            Uri uri = new (connectionString);
+
+            return $"Database={uri.AbsolutePath.Split("/")[1]}; Host={uri.Host}; Port={uri.Port}; User Id={uri.UserInfo.Split(":")[0]}; Password={uri.UserInfo.Split(":")[1]}; SSL Mode=Require;Trust Server Certificate=true";
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
