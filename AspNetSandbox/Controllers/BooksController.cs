@@ -52,7 +52,6 @@ namespace AspNetSandbox
             if (book != null)
             {
                 return Ok(readBookDto);
-
             }
 
             return NotFound();

@@ -55,7 +55,7 @@ namespace AspNetSandbox
                 return ConvertConnectionString(connectionString);
             }
 
-            //Replace Default Connection with ConvertConnectionString(connectionString)
+            // Replace Default Connection with ConvertConnectionString(connectionString)
             return Configuration.GetConnectionString("DefaultConnection");
         }
 

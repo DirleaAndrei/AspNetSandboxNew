@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
+using AspNetSandbox.Models;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AspNetSandbox.Data
 {
@@ -20,7 +19,21 @@ namespace AspNetSandbox.Data
                 }
                 else
                 {
-                    Console.WriteLine("There are no books!");
+                    Book book1 = new ()
+                    {
+                        BookTitle = "Arta manipularii",
+                        BookAuthor = "Kevin Dutton",
+                        BookLanguage = "Romanian",
+                    };
+                    Book book2 = new ()
+                    {
+                        BookTitle = "Puterea prezentului",
+                        BookAuthor = "Eckhart Tolle",
+                        BookLanguage = "Romanian",
+                    };
+                    appDbContext.Add(book1);
+                    appDbContext.Add(book2);
+                    appDbContext.SaveChanges();
                 }
             }
         }
