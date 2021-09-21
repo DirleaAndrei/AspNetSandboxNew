@@ -105,7 +105,7 @@ namespace AspNetSandbox
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
-            DataTools.SeedData(app);
+            app.SeedData();
         }
     }
 }

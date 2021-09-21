@@ -9,7 +9,7 @@ namespace AspNetSandbox.Data
 {
     public static class DataTools
     {
-        public static void SeedData(IApplicationBuilder app)
+        public static void SeedData(this IApplicationBuilder app)
         {
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
