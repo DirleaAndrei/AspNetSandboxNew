@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using AspNetSandbox.Data;
 using AspNetSandbox.Services;
@@ -42,6 +43,7 @@ namespace AspNetSandbox
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
             });
+            services.AddSignalR();
             services.AddScoped<IBookRepository, DbBooksRepository>();
         }
 
@@ -103,6 +105,19 @@ namespace AspNetSandbox
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var appDbContext = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+                if (appDbContext.Books.Any())
+                {
+                    Console.WriteLine("The books are there!");
+                }
+                else
+                {
+                    Console.WriteLine("There are no books!");
+                }
+            }
         }
     }
 }
