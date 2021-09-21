@@ -105,19 +105,7 @@ namespace AspNetSandbox
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
-
-            using (var serviceScope = app.ApplicationServices.CreateScope())
-            {
-                var appDbContext = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
-                if (appDbContext.Books.Any())
-                {
-                    Console.WriteLine("The books are there!");
-                }
-                else
-                {
-                    Console.WriteLine("There are no books!");
-                }
-            }
+            DataTools.SeedData(app);
         }
     }
 }
