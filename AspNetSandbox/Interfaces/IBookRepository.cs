@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using AspNetSandbox.Models;
 
-namespace AspNetSandbox
+namespace AspNetSandbox.Interfaces
 {
     /// <summary>
     /// This is the interface for BooksService.

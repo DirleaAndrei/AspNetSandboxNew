@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AspNetSandbox.DTOs;
+using AspNetSandbox.Hubs;
+using AspNetSandbox.Interfaces;
 using AspNetSandbox.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +18,12 @@ namespace AspNetSandbox
         private readonly IHubContext<MessageHub> hubContext;
         private readonly IMapper mapper;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BooksController"/> class.
+        /// </summary>
+        /// <param name="repository"></param>
+        /// <param name="hubContext"></param>
+        /// <param name="mapper"></param>
         public BooksController(IBookRepository repository, IHubContext<MessageHub> hubContext, IMapper mapper)
         {
             this.repository = repository;
@@ -23,6 +31,10 @@ namespace AspNetSandbox
             this.mapper = mapper;
         }
 
+        /// <summary>Gets all books.</summary>
+        /// <returns>
+        ///   Book object.
+        /// </returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -57,6 +69,9 @@ namespace AspNetSandbox
             return NotFound();
         }
 
+        /// <summary>Create book.</summary>
+        /// <param name="bookDto">Book to create.</param>
+        /// <returns>Action result.</returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateBookDto bookDto)
         {
@@ -89,6 +104,9 @@ namespace AspNetSandbox
             return NotFound();
         }
 
+        /// <summary>Delete book. </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Action result.</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
