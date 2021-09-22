@@ -5,9 +5,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Projects\AspNetSandbox\AspNetSandbox\AspNetSandbox.xml</DocumentationFile>
+	<DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningsAsErrors />
+    <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

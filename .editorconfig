@@ -1,52 +1,22 @@
 ﻿[*.cs]
 
-# CS1591: Missing XML comment for publicly visible type or member
-dotnet_diagnostic.CS1591.severity = none
-
-# SA1202: Elements should be ordered by access
-dotnet_diagnostic.SA1202.severity = none
-
 # SA1633: File should have header
 dotnet_diagnostic.SA1633.severity = none
-
-# SA1404: Code analysis suppression should have justification
-dotnet_diagnostic.SA1404.severity = none
-
-# SA1310: Field names should not contain underscore
-dotnet_diagnostic.SA1310.severity = none
 
 # SA1101: Prefix local calls with this
 dotnet_diagnostic.SA1101.severity = none
 
-# SA1204: Static elements should appear before instance elements
-dotnet_diagnostic.SA1204.severity = none
-
-# IDE0044: Add readonly modifier
-dotnet_diagnostic.IDE0044.severity = none
-
-# IDE0028: Simplify collection initialization
-dotnet_diagnostic.IDE0028.severity = none
-
-# SA1201: Elements should appear in the correct order
-dotnet_diagnostic.SA1201.severity = none
-
-# SA1649: File name should match first type name
-dotnet_diagnostic.SA1649.severity = none
-
-# SA1309: Field names should not begin with underscore
-dotnet_diagnostic.SA1309.severity = none
-
-# IDE0052: Remove unread private members
-dotnet_diagnostic.IDE0052.severity = none
-
-# SA1200: Using directives should be placed correctly
 dotnet_diagnostic.SA1200.severity = none
+
+# SA1614: Element parameter documentation should have text
+dotnet_diagnostic.SA1614.severity = none
 
 # SA1601: Partial elements should be documented
 dotnet_diagnostic.SA1601.severity = none
 
-# SA1137: Elements should have the same indentation
-dotnet_diagnostic.SA1137.severity = none
+# SA1600: Elements should be documented
+dotnet_diagnostic.SA1600.severity = none
 
-# CS0472: The result of the expression is always the same since a value of this type is never equal to 'null'
-dotnet_diagnostic.CS0472.severity = none
+
+# Default severity for all analyzer diagnostics
+dotnet_analyzer_diagnostic.severity = none

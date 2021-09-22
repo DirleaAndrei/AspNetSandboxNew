@@ -36,16 +36,19 @@ namespace AspNetSandbox.Services
             id = 0;
         }
 
+        /// <inheritdoc/>
         public IEnumerable<Book> GetAllBooks()
         {
             return books;
         }
 
+        /// <inheritdoc/>
         public Book GetBookById(int id)
         {
             return books.Single(_ => _.BookId == id);
         }
 
+        /// <inheritdoc/>
         public void AddNewBook(Book book)
         {
             int bookId = GetNewId();
@@ -58,6 +61,7 @@ namespace AspNetSandbox.Services
             return id++;
         }
 
+        /// <inheritdoc/>
         public void UpdateBookById(int id, Book updatedBook)
         {
             var bookToBeUpdated = books.Single(_ => _.BookId == id);
@@ -66,6 +70,7 @@ namespace AspNetSandbox.Services
             bookToBeUpdated.BookLanguage = updatedBook.BookLanguage;
         }
 
+        /// <inheritdoc/>
         public void DeleteBookById(int id)
         {
             if (GetBookById(id) != null)

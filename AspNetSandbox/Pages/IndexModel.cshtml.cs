@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-
-namespace AspNetSandbox.Pages
+﻿namespace AspNetSandbox.Pages
 {
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.Extensions.Logging;
+
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;

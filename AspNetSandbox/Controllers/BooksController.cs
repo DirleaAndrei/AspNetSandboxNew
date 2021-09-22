@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AspNetSandbox.DTOs;
-using AspNetSandbox.Hubs;
-using AspNetSandbox.Interfaces;
-using AspNetSandbox.Models;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-
-namespace AspNetSandbox
+﻿namespace AspNetSandbox
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using AspNetSandbox.DTOs;
+    using AspNetSandbox.Hubs;
+    using AspNetSandbox.Interfaces;
+    using AspNetSandbox.Models;
+    using AutoMapper;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.SignalR;
+
     [Route("api/[controller]")]
     [ApiController]
     public class BooksController : ControllerBase
@@ -53,11 +53,6 @@ namespace AspNetSandbox
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var book = repository.GetBookById(id);
             ReadBookDto readBookDto = mapper.Map<ReadBookDto>(book);
             await hubContext.Clients.All.SendAsync("SpecificBook", readBookDto);

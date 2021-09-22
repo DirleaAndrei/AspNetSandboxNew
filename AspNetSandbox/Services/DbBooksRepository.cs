@@ -15,23 +15,27 @@ namespace AspNetSandbox.Services
             _context = context;
         }
 
+        /// <inheritdoc/>
         public void AddNewBook(Book book)
         {
             _context.Add(book);
             _context.SaveChanges();
         }
 
+        /// <inheritdoc/>
         public void DeleteBookById(int id)
         {
             _context.Books.Remove(GetBookById(id));
             _context.SaveChanges();
         }
 
+        /// <inheritdoc/>
         public IEnumerable<Book> GetAllBooks()
         {
             return _context.Books.ToList();
         }
 
+        /// <inheritdoc/>
         public Book GetBookById(int id)
         {
             var book = _context.Books
@@ -39,6 +43,7 @@ namespace AspNetSandbox.Services
             return book;
         }
 
+        /// <inheritdoc/>
         public void UpdateBookById(int id, Book updatedBook)
         {
             var selectedBook = GetBookById(id);

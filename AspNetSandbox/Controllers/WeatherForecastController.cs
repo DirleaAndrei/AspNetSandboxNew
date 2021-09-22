@@ -15,7 +15,7 @@ namespace AspNetSendbox.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private const float KELVIN_CONST = 273.15f;
+        private const float KELVINCONST = 273.15f;
 
         /// <summary>
         /// Return weather forecast for 5 days.
@@ -36,6 +36,13 @@ namespace AspNetSendbox.Controllers
             return ConvertResponseToWeatherForecast(response.Content);
         }
 
+        /// <summary>
+        /// Return City coordinates.
+        /// </summary>
+        /// <returns>
+        /// WeatherForecastCityCoordinates object.
+        /// </returns>
+        /// <param name="city"></param>
         [HttpGet]
         [Route("city")]
         public WeatherForecastCityCoordinates GetCityCoordinates(string city)
@@ -50,6 +57,14 @@ namespace AspNetSendbox.Controllers
             return GetCityCoordinatesFromOpenWeather(response.Content);
         }
 
+        /// <summary>
+        /// Convert response to weather forecast.
+        /// </summary>
+        /// <returns>
+        /// Enumerable of weather forecast objects.
+        /// </returns>
+        /// <param name="content"></param>
+        /// <param name="days"></param>
         [NonAction]
         public IEnumerable<WeatherForecast> ConvertResponseToWeatherForecast(string content, int days = 5)
         {
@@ -72,6 +87,13 @@ namespace AspNetSendbox.Controllers
             .ToArray();
         }
 
+        /// <summary>
+        /// Get city coordinates from OpenWeather.
+        /// </summary>
+        /// <returns>
+        /// WeatherForecastCityCoordinates object.
+        /// </returns>
+        /// <param name="content"></param>
         [NonAction]
         public WeatherForecastCityCoordinates GetCityCoordinatesFromOpenWeather(string content)
         {
@@ -88,7 +110,7 @@ namespace AspNetSendbox.Controllers
 
         private static int ExtractCelsiusTemperatureFromDailyWeather(JToken jsonDailyForecast)
         {
-            return (int)Math.Round(jsonDailyForecast["temp"].Value<float>("day") - KELVIN_CONST);
+            return (int)Math.Round(jsonDailyForecast["temp"].Value<float>("day") - KELVINCONST);
         }
     }
 }

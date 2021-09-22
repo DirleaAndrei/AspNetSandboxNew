@@ -6,6 +6,7 @@ namespace AspNetSandbox.Migrations
 {
     public partial class InitialMigration : Migration
     {
+        /// <inheritdoc/>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -206,6 +207,7 @@ namespace AspNetSandbox.Migrations
                 unique: true);
         }
 
+        /// <inheritdoc/>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

@@ -4,7 +4,6 @@ using AspNetSandbox.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AspNetSandbox.Migrations
@@ -13,6 +12,7 @@ namespace AspNetSandbox.Migrations
     [Migration("20210916105923_AddPurchasePrice")]
     partial class AddPurchasePrice
     {
+        /// <inheritdoc/>
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618

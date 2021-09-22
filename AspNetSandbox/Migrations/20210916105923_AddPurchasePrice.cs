@@ -4,6 +4,7 @@ namespace AspNetSandbox.Migrations
 {
     public partial class AddPurchasePrice : Migration
     {
+        /// <inheritdoc/>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<decimal>(
@@ -14,6 +15,7 @@ namespace AspNetSandbox.Migrations
                 defaultValue: 0m);
         }
 
+        /// <inheritdoc/>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(

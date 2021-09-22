@@ -13,6 +13,7 @@ namespace AspNetSandbox.Migrations
     [Migration("20210922082408_FinalMigration")]
     partial class FinalMigration
     {
+        /// <inheritdoc/>
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618

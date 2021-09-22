@@ -44,5 +44,21 @@ namespace AspNetSanboxTests
 }
 ");
         }
+
+        [Fact]
+        public void ReadFilesTest()
+        {
+            using (var fs = File.OpenRead("newSettings.json"))
+            {
+                byte[] b = new byte[1024];
+                UTF8Encoding temp = new UTF8Encoding(true);
+
+                while (fs.Read(b, 0, b.Length) > 0)
+                {
+                    var read = temp.GetString(b);
+                    Console.WriteLine(read);
+                }
+            }
+        }
     }
 }
