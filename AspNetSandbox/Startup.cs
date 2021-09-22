@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using AspNetSandbox.Data;
+using AspNetSandbox.Hubs;
+using AspNetSandbox.Interfaces;
 using AspNetSandbox.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
