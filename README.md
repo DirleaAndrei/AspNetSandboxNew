@@ -6,6 +6,10 @@ language | c#
 database | postgres
 deployed | https://asp-sandbox-update.herokuapp.com/
 
+#Image with working app
+
+![alt text](https://github.com/[DirleaAndrei]/[AspNetSandbox]/blob/[master]/images/andrei.jpg?raw=true)
+
 # How to run in Docker from the commandline
 
 ## Run this commands in [AspNetSanbox](AspNetSandbox) project

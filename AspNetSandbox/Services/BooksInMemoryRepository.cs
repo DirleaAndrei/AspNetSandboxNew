@@ -7,7 +7,7 @@ namespace AspNetSandbox.Services
 {
     public class BooksInMemoryRepository : IBookRepository
     {
-        private List<Book> books;
+        private readonly List<Book> books;
         private static int id = 0;
 
         public BooksInMemoryRepository()
