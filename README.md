@@ -1,4 +1,4 @@
-﻿#Andrei AspNetSandbox project for backend course
+﻿###Andrei AspNetSandbox project for backend course
 
 name | value
 --- | ---
@@ -6,9 +6,9 @@ language | c#
 database | postgres
 deployed | https://asp-sandbox-update.herokuapp.com/
 
-## How to run in Docker from the commandline
+# How to run in Docker from the commandline
 
-### Run this commands in [AspNetSanbox](AspNetSandbox) project
+## Run this commands in [AspNetSanbox](AspNetSandbox) project
 
 Build in container
 ```
@@ -46,10 +46,10 @@ heroku container:login
 
 Push container
 ```
-heroku container:push -a deploy-with-db web
+heroku container:push -a asp-sandbox-update web
 ```
 
 Release the container
 ```
-heroku container:release -a deploy-with-db web
+heroku container:release -a asp-sandbox-update web
 ```
