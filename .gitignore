@@ -458,3 +458,4 @@ $RECYCLE.BIN/
 *.suo
 *.dll
 *.cache
+*.bak
