@@ -8,7 +8,7 @@ deployed | https://asp-sandbox-update.herokuapp.com/
 
 #Image with working app
 
-![alt text](https://github.com/DirleaAndrei/AspNetSandboxNew/tree/master/images/andrei.jpg?raw=true)
+![alt text](https://github.com/DirleaAndrei/AspNetSandboxNew/blob/master/images/andrei.jpg?raw=true)
 
 # How to run in Docker from the commandline
 
