@@ -34,6 +34,7 @@ namespace UsersManagement
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
         }
@@ -59,6 +60,8 @@ namespace UsersManagement
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.SeedUsersWithRolesAsync();
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,21 +1,18 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using UserManagement.Data;
-using UserManagement.Models;
 
-namespace UserManagement.Controllers
+namespace UsersManagement.Controllers
 {
-    public class UsersController : Controller
+    public class UsersController11 : Controller
     {
         private readonly UserManager<IdentityUser> userManager;
 
-        public UsersController(UserManager<IdentityUser> userManager)
+        public UsersController11(UserManager<IdentityUser> userManager)
         {
             this.userManager = userManager;
         }
@@ -24,7 +21,7 @@ namespace UserManagement.Controllers
         public async Task<IActionResult> Index()
         {
             var users = await userManager.Users.ToListAsync();
-            return Ok(users);
+            return View(users);
         }
 
         public async Task<IActionResult> Details(string? id)
@@ -40,7 +37,7 @@ namespace UserManagement.Controllers
                 return NotFound();
             }
 
-            return Ok(user);
+            return View(user);
         }
 
         public IActionResult Create()
@@ -56,7 +53,7 @@ namespace UserManagement.Controllers
                 await userManager.CreateAsync(user);
                 return RedirectToAction(nameof(Index));
             }
-            return Ok(user);
+            return View(user);
         }
 
         public async Task<IActionResult> Edit(string? id)
@@ -71,7 +68,7 @@ namespace UserManagement.Controllers
             {
                 return NotFound();
             }
-            return Ok(user);
+            return View(user);
         }
 
         [HttpPost]
@@ -101,7 +98,7 @@ namespace UserManagement.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return Ok(user);
+            return View(user);
         }
 
         public async Task<IActionResult> Delete(string? id)
@@ -118,7 +115,7 @@ namespace UserManagement.Controllers
             }
             await userManager.DeleteAsync(user);
 
-            return Ok(user);
+            return View(user);
         }
     }
 }

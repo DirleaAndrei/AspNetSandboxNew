@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using UserManagement.Data;
+using UsersManagement.Data;
 
-namespace UserManagement.Migrations
+namespace UsersManagement.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210923063921_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20210923184601_UsersMigration")]
+    partial class UsersMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

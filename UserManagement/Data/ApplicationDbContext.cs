@@ -13,6 +13,5 @@ namespace UserManagement.Data
             : base(options)
         {
         }
-        public DbSet<UserManagement.Models.User> User { get; set; }
     }
 }
